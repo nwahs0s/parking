@@ -10,7 +10,7 @@ spring:
 # Logger Config
 logging:
     level:
-      com.park: debug
+      com.park: 
 
 mybatis:
   mapper-locations: classpath:com.parkmapper/*.xml

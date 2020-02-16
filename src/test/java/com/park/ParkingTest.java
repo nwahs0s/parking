@@ -1,7 +1,7 @@
 package com.park;
 
-import com.park.domain.SysParking;
-import com.park.mapper.SysParkingMapper;
+import com.park.domain.CarParkingRecord;
+import com.park.service.ParkingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +15,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ParkingTest {
 
     @Autowired
-    private SysParkingMapper sysParkingMapper;
+    private ParkingService parkingService;
 
     @Test
-    public void testInsert() {
-        SysParking sysParking = new SysParking();
-        sysParking.setParkingNum(1);
-        sysParking.setCarId("12124545");
+    public void testQueryParkingSpaces() throws Exception {
+       
 
-        assertThat(sysParkingMapper.insert(sysParking)).isGreaterThan(0);
+        assertThat(parkingService.checkParkingSpace());
+        
+        CarParkingRecord carParkingRecord= new CarParkingRecord();
+        carParkingRecord.setCarId("test123");
+        carParkingRecord.setType("motorcycle");
+        assertThat(parkingService.enterPark(carParkingRecord)).isGreaterThan(0);
+        assertThat(parkingService.exitPark(carParkingRecord)).isEqualTo("success");
         // 成功直接拿会写的 ID
-        assertThat(sysParking.getId()).isNotNull();
+//        assertThat(sysParking.getId()).isNotNull();
     }
 }
