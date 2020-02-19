@@ -13,6 +13,7 @@ import com.park.domain.CarParkingRecord;
 import com.park.domain.ParkingSpaces;
 import com.park.mapper.CarParkingRecordMapper;
 import com.park.mapper.ParkingSpacesMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ParkingService {
@@ -37,6 +38,7 @@ public class ParkingService {
      * @return
      * @throws Exception
      */
+    @Transactional
     public Integer enterPark(CarParkingRecord carParkingRecord) throws Exception{
     	Date nowtime = new Date();
     	Thread.sleep(1000);
@@ -56,7 +58,7 @@ public class ParkingService {
     	parkingSpaces.setStatus(true);
     	parkingSpacesMapper.updateByPrimaryKey(parkingSpaces);
     	logger.info(String.format("A %s has entered at %s and parked in parking space <%d>. Remaining parking spaces for %s is <%d>"
-				,carParkingRecord.getType(),sdf.format(nowtime),1,carParkingRecord.getType(),list.size()-1));
+				,carParkingRecord.getType(),sdf.format(nowtime),carParkingRecord.getParkingSpacesId(),carParkingRecord.getType(),list.size()-1));
     	return carParkingRecord.getId();
     }
     
@@ -66,6 +68,7 @@ public class ParkingService {
      * @return
      * @throws Exception
      */
+    @Transactional
     public String exitPark(CarParkingRecord carParkingRecord) throws Exception{
     	int charge = 10;
     	Date nowtime = new Date();

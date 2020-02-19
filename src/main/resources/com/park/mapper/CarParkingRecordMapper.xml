@@ -119,7 +119,9 @@
 	 select car_parking_record.* from car_parking_record
 	  , parking_spaces 
 	  where 
-	  parking_spaces.id = car_parking_record.parking_spaces_id and  parking_spaces.status = 1
+	  parking_spaces.id = car_parking_record.parking_spaces_id
+	  and  parking_spaces.status = #{status,jdbcType=INTEGER}
+	  and car_parking_record.end_time is null
     
   </select>
 </mapper>
